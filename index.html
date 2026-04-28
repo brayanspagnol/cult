@@ -30,78 +30,187 @@
         </button>
     </header>
 
-    <main class="conteudo">
-        <section class="sessao-filmes" aria-label="Catalogo de filmes">
-            <div class="sessao-topo">
+    <section class="hero-filme" aria-label="Filme de destaque">
+        <img src="images/capa_principal.jpg" alt="Cena do filme em destaque" loading="eager">
+        <div class="hero-overlay">
+            <div class="hero-info">
+                <div class="hero-badge">
+                    <span class="badge-top">TOP</span>
+                    <span class="badge-numero">1</span>
+                    <span class="badge-pais">no Brasil</span>
+                </div>
+                <h1>O Sal da Terra</h1>
+                <p class="hero-subtitulo">
+                    Conheca a trajetoria do renomado fotografo brasileiro Sebastiao Salgado, desde seus
+                    primeiros trabalhos em Serra Pelada, o registro da miseria na Africa e no Nordeste do Brasil
+                    ate sua obra-prima, "Genesis".
+                </p>
+                <div class="hero-acoes">
+                    <button class="botao-assistir" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        Assistir
+                    </button>
+                    <button class="botao-mais-info" type="button">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 16v-4m0-4h.01"/>
+                        </svg>
+                        Mais informacoes
+                    </button>
+                </div>
+                <div class="hero-meta">
+                    <span class="hero-ano">2014</span>
+                    <span class="hero-categoria">Ação e aventura</span>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="lista-filmes" role="list">
-                <article class="card-filme" role="listitem">
-                    <img src="images/a casa das sete mulheres.jpg" alt="A Casa das Sete Mulheres" loading="lazy">
-                    <h3>A Casa das Sete Mulheres</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/amar e para os fortes.jpg" alt="Amar e para os Fortes" loading="lazy">
-                    <h3>Amar e para os Fortes</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/amarElo.jfif" alt="AmarElo" loading="lazy">
-                    <h3>AmarElo</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/bacurau.jpg" alt="Bacurau" loading="lazy">
-                    <h3>Bacurau</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/carandiru.jpg" alt="Carandiru" loading="lazy">
-                    <h3>Carandiru</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/central do brasil.jpg" alt="Central do Brasil" loading="lazy">
-                    <h3>Central do Brasil</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/chernobyl.jpg" alt="Chernobyl" loading="lazy">
-                    <h3>Chernobyl</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/CidadedeDeus.jpg" alt="Cidade de Deus" loading="lazy">
-                    <h3>Cidade de Deus</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/emergencia radioativa.webp" alt="Emergencia Radioativa" loading="lazy">
-                    <h3>Emergencia Radioativa</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/hoje eu quero voltar sozinho.jpeg" alt="Hoje Eu Quero Voltar Sozinho" loading="lazy">
-                    <h3>Hoje Eu Quero Voltar Sozinho</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/irmaos de guerra.jpg" alt="Irmaos de Guerra" loading="lazy">
-                    <h3>Irmaos de Guerra</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/o auto da compadecida.jpg" alt="O Auto da Compadecida" loading="lazy">
-                    <h3>O Auto da Compadecida</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/o pagador de promessa.jpg" alt="O Pagador de Promessa" loading="lazy">
-                    <h3>O Pagador de Promessa</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/que horas ela volta.jpg" alt="Que Horas Ela Volta" loading="lazy">
-                    <h3>Que Horas Ela Volta</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/terrra em transe.jfif" alt="Terra em Transe" loading="lazy">
-                    <h3>Terra em Transe</h3>
-                </article>
-                <article class="card-filme" role="listitem">
-                    <img src="images/tropa de elite.jpg" alt="Tropa de Elite" loading="lazy">
-                    <h3>Tropa de Elite</h3>
-                </article>
+    <main class="conteudo">
+        <section class="sessao-top-semana" aria-label="Top filmes mais assistidos da semana">
+            <div class="sessao-topo">
+                <h2>Top filmes mais assistidos da semana</h2>
+            </div>
+            <div class="top-trilho">
+                <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                <div class="top-semana-lista" role="list">
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">1</span>
+                        <img src="images/capa_principal.jpg" alt="O Sal da Terra" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">2</span>
+                        <img src="images/CidadedeDeus.jpg" alt="Cidade de Deus" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">3</span>
+                        <img src="images/tropa de elite.jpg" alt="Tropa de Elite" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">4</span>
+                        <img src="images/carandiru.jpg" alt="Carandiru" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">5</span>
+                        <img src="images/central do brasil.jpg" alt="Central do Brasil" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">6</span>
+                        <img src="images/o auto da compadecida.jpg" alt="O Auto da Compadecida" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">7</span>
+                        <img src="images/bacurau.jpg" alt="Bacurau" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">8</span>
+                        <img src="images/chernobyl.jpg" alt="Chernobyl" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">9</span>
+                        <img src="images/hoje eu quero voltar sozinho.jpeg" alt="Hoje Eu Quero Voltar Sozinho" loading="lazy">
+                    </article>
+                    <article class="top-semana-item" role="listitem">
+                        <span class="top-posicao">10</span>
+                        <img src="images/amarElo.jfif" alt="AmarElo" loading="lazy">
+                    </article>
+                </div>
+                <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
             </div>
         </section>
+
+        <section class="sessao-filmes" aria-label="Catalogo de filmes por genero">
+            <section class="sessao-genero" aria-label="Drama e documentarios">
+                <div class="sessao-topo">
+                    <h2>Drama e documentarios</h2>
+                </div>
+                <div class="sessao-trilho">
+                    <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                    <div class="lista-filmes" role="list">
+                        <article class="card-filme" role="listitem"><img src="images/capa_principal.jpg" alt="O Sal da Terra" loading="lazy"><h3>O Sal da Terra</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/central do brasil.jpg" alt="Central do Brasil" loading="lazy"><h3>Central do Brasil</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/que horas ela volta.jpg" alt="Que Horas Ela Volta" loading="lazy"><h3>Que Horas Ela Volta</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/hoje eu quero voltar sozinho.jpeg" alt="Hoje Eu Quero Voltar Sozinho" loading="lazy"><h3>Hoje Eu Quero Voltar Sozinho</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/amarElo.jfif" alt="AmarElo" loading="lazy"><h3>AmarElo</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/o pagador de promessa.jpg" alt="O Pagador de Promessa" loading="lazy"><h3>O Pagador de Promessa</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/capa_principal.jpg" alt="O Sal da Terra" loading="lazy"><h3>O Sal da Terra</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/central do brasil.jpg" alt="Central do Brasil" loading="lazy"><h3>Central do Brasil</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/que horas ela volta.jpg" alt="Que Horas Ela Volta" loading="lazy"><h3>Que Horas Ela Volta</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/hoje eu quero voltar sozinho.jpeg" alt="Hoje Eu Quero Voltar Sozinho" loading="lazy"><h3>Hoje Eu Quero Voltar Sozinho</h3></article>
+                    </div>
+                    <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
+                </div>
+            </section>
+
+            <section class="sessao-genero" aria-label="Acao e crime">
+                <div class="sessao-topo">
+                    <h2>Acao e crime</h2>
+                </div>
+                <div class="sessao-trilho">
+                    <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                    <div class="lista-filmes" role="list">
+                        <article class="card-filme" role="listitem"><img src="images/CidadedeDeus.jpg" alt="Cidade de Deus" loading="lazy"><h3>Cidade de Deus</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/tropa de elite.jpg" alt="Tropa de Elite" loading="lazy"><h3>Tropa de Elite</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/carandiru.jpg" alt="Carandiru" loading="lazy"><h3>Carandiru</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/bacurau.jpg" alt="Bacurau" loading="lazy"><h3>Bacurau</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/o auto da compadecida.jpg" alt="O Auto da Compadecida" loading="lazy"><h3>O Auto da Compadecida</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/terrra em transe.jfif" alt="Terra em Transe" loading="lazy"><h3>Terra em Transe</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/CidadedeDeus.jpg" alt="Cidade de Deus" loading="lazy"><h3>Cidade de Deus</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/tropa de elite.jpg" alt="Tropa de Elite" loading="lazy"><h3>Tropa de Elite</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/carandiru.jpg" alt="Carandiru" loading="lazy"><h3>Carandiru</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/bacurau.jpg" alt="Bacurau" loading="lazy"><h3>Bacurau</h3></article>
+                    </div>
+                    <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
+                </div>
+            </section>
+
+            <section class="sessao-genero" aria-label="Series e minisséries">
+                <div class="sessao-topo">
+                    <h2>Series e minisséries</h2>
+                </div>
+                <div class="sessao-trilho">
+                    <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                    <div class="lista-filmes" role="list">
+                        <article class="card-filme" role="listitem"><img src="images/a casa das sete mulheres.jpg" alt="A Casa das Sete Mulheres" loading="lazy"><h3>A Casa das Sete Mulheres</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/amar e para os fortes.jpg" alt="Amar e para os Fortes" loading="lazy"><h3>Amar e para os Fortes</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/chernobyl.jpg" alt="Chernobyl" loading="lazy"><h3>Chernobyl</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/irmaos de guerra.jpg" alt="Irmaos de Guerra" loading="lazy"><h3>Irmaos de Guerra</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/emergencia radioativa.webp" alt="Emergencia Radioativa" loading="lazy"><h3>Emergencia Radioativa</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/chernobyl.jpg" alt="Chernobyl" loading="lazy"><h3>Chernobyl</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/a casa das sete mulheres.jpg" alt="A Casa das Sete Mulheres" loading="lazy"><h3>A Casa das Sete Mulheres</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/irmaos de guerra.jpg" alt="Irmaos de Guerra" loading="lazy"><h3>Irmaos de Guerra</h3></article>
+                        <article class="card-filme" role="listitem"><img src="images/emergencia radioativa.webp" alt="Emergencia Radioativa" loading="lazy"><h3>Emergencia Radioativa</h3></article>
+                    </div>
+                    <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
+                </div>
+            </section>
+        </section>
     </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CULT. Todos os direitos reservados.</p>
+        <nav aria-label="Links do rodape">
+            <a href="#">Termos de uso</a>
+            <a href="#">Privacidade</a>
+            <a href="#">Central de ajuda</a>
+        </nav>
+    </footer>
+
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+    <aside class="info-sidebar" aria-hidden="true" aria-label="Detalhes do filme">
+        <button class="sidebar-fechar" type="button" aria-label="Fechar painel">×</button>
+        <h2 class="sidebar-titulo">O Sal da Terra</h2>
+        <a class="sidebar-player" href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir trailer no YouTube">
+            <img class="sidebar-player-thumb" src="images/capa_principal.jpg" alt="Capa do trailer">
+            <span class="sidebar-player-play">Assistir trailer</span>
+        </a>
+        <p class="sidebar-sinopse"></p>
+        <div class="sidebar-meta"></div>
+        <a class="sidebar-trailer" href="#" target="_blank" rel="noopener noreferrer">Ver trailer no YouTube</a>
+    </aside>
+
+    <script src="script.js"></script>
 </body>
 </html>
