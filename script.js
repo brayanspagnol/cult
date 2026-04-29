@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Eventos para definir a interface do usuário
     const ui = {
         botaoMaisInfo: $(".botao-mais-info"),
+        campoBusca: $(".campo-busca"),
+        inputBusca: $("#busca"),
+        botaoPerfil: $(".usuario"),
+        heroFilme: $(".hero-filme"),
         sidebar: $(".info-sidebar"),
         overlay: $(".sidebar-overlay"),
         fechar: $(".sidebar-fechar"),
@@ -15,8 +19,26 @@ document.addEventListener("DOMContentLoaded", () => {
         meta: $(".sidebar-meta"),
         trailer: $(".sidebar-trailer"),
         player: $(".sidebar-player"),
-        playerThumb: $(".sidebar-player-thumb")
+        playerThumb: $(".sidebar-player-thumb"),
+        navLinks: $$(".nav-link"),
+        topSemana: $(".sessao-top-semana"),
+        sessaoFilmes: $(".sessao-filmes"),
+        sessoesGenero: $$(".sessao-genero"),
+        secaoMinhaLista: $(".sessao-minha-lista"),
+        listaDesejos: $(".minha-lista-lista"),
+        listaVazia: $(".minha-lista-vazia"),
+        secaoBusca: $(".sessao-busca"),
+        buscaLista: $(".busca-lista"),
+        buscaStatus: $(".busca-status"),
+        secaoPerfil: $(".sessao-perfil"),
+        formPerfil: $(".perfil-form"),
+        perfilStatus: $(".perfil-status")
     };
+
+    const STORAGE_KEY = "cultMinhaListaJson";
+    let listaDesejos = [];
+    let perfil = {};
+    const capasPorTitulo = {};
 
     // Eventos para definir o catalogo de filmes
     const catalogo = {
@@ -217,6 +239,14 @@ document.addEventListener("DOMContentLoaded", () => {
         youtubeId: ""
     };
 
+    const perfilFicticio = () => ({
+        nome: "Marina Costa",
+        email: "marina.costa@cultplay.com",
+        telefone: "(11) 98888-2211",
+        plano: "Premium",
+        idioma: "Portugues"
+    });
+
     // Eventos para definir a meta da carta de filme
     const metaCard = (info) => {
         const genero = info.detalhes.find((d) => d.startsWith("Genero:"))?.replace("Genero:", "").trim() || "Genero nao informado";
@@ -224,8 +254,232 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${ano} • ${genero}`;
     };
 
+    // Eventos para salvar os dados do usuario em localStorage
+    const salvarDadosJson = () => {
+        const payload = {
+            atualizadaEm: new Date().toISOString(),
+            filmes: listaDesejos,
+            perfil
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload, null, 2));
+    };
+
+    // Eventos para carregar os dados do usuario em localStorage
+    const carregarDadosJson = () => {
+        try {
+            const bruto = localStorage.getItem(STORAGE_KEY);
+            if (!bruto) return { filmes: [], perfil: perfilFicticio() };
+            const dados = JSON.parse(bruto);
+            return {
+                filmes: Array.isArray(dados.filmes) ? dados.filmes : [],
+                perfil: { ...perfilFicticio(), ...(dados.perfil || {}) }
+            };
+        } catch {
+            return { filmes: [], perfil: perfilFicticio() };
+        }
+    };
+
+    // Eventos para atualizar os botoes de lista de desejos
+    const atualizarBotoesLista = () => {
+        $$(".card-acao-lista").forEach((botao) => {
+            const nome = botao.dataset.nome || "";
+            const adicionado = listaDesejos.includes(nome);
+            botao.dataset.added = String(adicionado);
+            botao.classList.toggle("ativo", adicionado);
+            botao.setAttribute("aria-label", adicionado ? "Remover da lista de desejos" : "Adicionar a lista de desejos");
+            const texto = $(".sr-only", botao);
+            if (texto) texto.textContent = adicionado ? "Remover da lista de desejos" : "Adicionar a lista de desejos";
+        });
+    };
+
+    // Eventos para montar o card de filme na minha lista
+    const montarCardMinhaLista = (nome) => {
+        const card = document.createElement("article");
+        card.className = "card-filme";
+        card.setAttribute("role", "listitem");
+        const capa = capasPorTitulo[nome] || "images/capa_principal.jpg";
+        card.innerHTML = `<img src="${capa}" alt="${nome}" loading="lazy"><h3>${nome}</h3>`;
+        return card;
+    };
+
+    // Eventos para renderizar a minha lista de desejos
+    const renderMinhaLista = () => {
+        if (!ui.listaDesejos || !ui.listaVazia) return;
+        ui.listaDesejos.innerHTML = "";
+
+        if (!listaDesejos.length) {
+            ui.listaVazia.classList.remove("escondida");
+            return;
+        }
+
+        ui.listaVazia.classList.add("escondida");
+        listaDesejos.forEach((nome) => {
+            const card = montarCardMinhaLista(nome);
+            ui.listaDesejos.appendChild(card);
+            inicializarCard(card);
+        });
+    };
+
+    // Eventos para renderizar os resultados da busca
+    const renderBusca = (termo) => {
+        if (!ui.buscaLista || !ui.buscaStatus) return;
+        const termoLimpo = termo.trim();
+        ui.buscaLista.innerHTML = "";
+
+        if (!termoLimpo) {
+            ui.buscaStatus.textContent = "Digite o nome de um filme ou serie para buscar.";
+            return;
+        }
+
+        const termoLower = termoLimpo.toLowerCase();
+        const resultados = Object.keys(catalogo).filter((nome) => nome.toLowerCase().includes(termoLower));
+
+        if (!resultados.length) {
+            ui.buscaStatus.textContent = `Nenhum titulo encontrado para "${termoLimpo}".`;
+            return;
+        }
+
+        ui.buscaStatus.textContent = `${resultados.length} resultado(s) para "${termoLimpo}".`;
+        resultados.forEach((nome) => {
+            const card = montarCardMinhaLista(nome);
+            ui.buscaLista.appendChild(card);
+            inicializarCard(card);
+        });
+    };
+
+    // Eventos para preencher o formulario de perfil
+    const preencherPerfil = () => {
+        if (!ui.formPerfil) return;
+        ui.formPerfil.nome.value = perfil.nome || "";
+        ui.formPerfil.email.value = perfil.email || "";
+        ui.formPerfil.telefone.value = perfil.telefone || "";
+        ui.formPerfil.plano.value = perfil.plano || "Padrao";
+        ui.formPerfil.idioma.value = perfil.idioma || "Portugues";
+    };
+
+    // Eventos para definir a view atual
+    const setView = (view) => {
+        const isInicio = view === "inicio";
+        const isSeries = view === "series";
+        const isFilmes = view === "filmes";
+        const isDocumentarios = view === "documentarios";
+        const isMinhaLista = view === "minha-lista";
+        const isBusca = view === "busca";
+        const isPerfil = view === "perfil";
+
+        ui.navLinks.forEach((link) => {
+            const ativo = link.dataset.view === view;
+            if (ativo) link.setAttribute("aria-current", "page");
+            else link.removeAttribute("aria-current");
+        });
+
+        ui.secaoMinhaLista?.classList.toggle("escondida", !isMinhaLista);
+        ui.secaoBusca?.classList.toggle("escondida", !isBusca);
+        ui.secaoPerfil?.classList.toggle("escondida", !isPerfil);
+        ui.heroFilme?.classList.toggle("escondida", !isInicio);
+        ui.topSemana?.classList.toggle("escondida", !isInicio);
+        ui.sessaoFilmes?.classList.toggle("escondida", isMinhaLista || isBusca || isPerfil);
+
+        ui.sessoesGenero.forEach((sessao) => {
+            const genero = sessao.dataset.genero;
+            const visivel =
+                isInicio ||
+                (isSeries && genero === "series") ||
+                (isFilmes && genero === "filmes") ||
+                (isDocumentarios && genero === "documentarios");
+            sessao.classList.toggle("escondida", !visivel);
+        });
+    };
+
+    // Eventos para criar as acoes do card de filme
+    const criarAcoesCard = (card, info, meta, nome) => {
+        if ($(".card-hover-info", card)) return;
+
+        const painel = document.createElement("div");
+        painel.className = "card-hover-info";
+        painel.setAttribute("aria-hidden", "true");
+
+        const metaEl = document.createElement("p");
+        metaEl.className = "card-hover-meta";
+        metaEl.textContent = meta;
+
+        const acoes = document.createElement("div");
+        acoes.className = "card-hover-acoes";
+
+        const botaoTrailer = document.createElement("a");
+        botaoTrailer.className = "card-acao card-acao-icone card-acao-trailer";
+        botaoTrailer.href = info.trailer;
+        botaoTrailer.target = "_blank";
+        botaoTrailer.rel = "noopener noreferrer";
+        botaoTrailer.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <span class="sr-only">Reproduzir trailer</span>
+        `;
+        botaoTrailer.setAttribute("aria-label", "Reproduzir trailer");
+
+        const botaoLista = document.createElement("button");
+        botaoLista.className = "card-acao card-acao-icone card-acao-lista";
+        botaoLista.type = "button";
+        botaoLista.innerHTML = `
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s-6.3-4.35-9.2-8.25C.9 10.2 1.5 6.5 4.9 5.1c2.1-.9 4.2-.2 5.6 1.4 1.4-1.6 3.5-2.3 5.6-1.4 3.4 1.4 4 5.1 2.1 7.65C18.3 16.65 12 21 12 21z"></path>
+            </svg>
+            <span class="sr-only">Adicionar a lista de desejos</span>
+        `;
+        botaoLista.setAttribute("aria-label", "Adicionar a lista de desejos");
+        botaoLista.dataset.added = "false";
+        botaoLista.dataset.nome = nome;
+
+        botaoLista.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const existe = listaDesejos.includes(nome);
+            if (existe) {
+                listaDesejos = listaDesejos.filter((item) => item !== nome);
+            } else {
+                listaDesejos.push(nome);
+            }
+            salvarDadosJson();
+            atualizarBotoesLista();
+            renderMinhaLista();
+        });
+
+        botaoTrailer.addEventListener("click", (e) => e.stopPropagation());
+
+        acoes.append(botaoTrailer, botaoLista);
+        painel.append(metaEl, acoes);
+        card.appendChild(painel);
+    };
+
+    // Eventos para inicializar o card de filme
+    const inicializarCard = (card) => {
+        if (!card || card.dataset.cardInit === "true") return;
+        const nome = $("h3", card)?.textContent.trim() || $("img", card)?.alt.trim() || "";
+        if (!nome) return;
+
+        const capa = $("img", card)?.getAttribute("src");
+        if (capa && !capasPorTitulo[nome]) capasPorTitulo[nome] = capa;
+
+        const info = getInfo(nome);
+        const meta = metaCard(info);
+        criarAcoesCard(card, info, meta, nome);
+
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.addEventListener("click", () => abrirSidebar(nome));
+        card.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                abrirSidebar(nome);
+            }
+        });
+        card.dataset.cardInit = "true";
+    };
+
     // Eventos para abrir o modal de detalhes do filme em destaque
     const abrirSidebar = (nome) => {
+        // Eventos para definir o titulo do filme
         const info = getInfo(nome);
         ui.titulo.textContent = nome;
         ui.sinopse.textContent = info.sinopse;
@@ -267,43 +521,53 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Eventos para os botões de navegação dos trilhos
-    $$(".card-filme, .top-semana-item").forEach((card) => {
-        const nome = $("h3", card)?.textContent.trim() || $("img", card)?.alt.trim() || "";
-        const info = getInfo(nome);
-        const meta = metaCard(info);
+    // Eventos para carregar os dados iniciais do usuario
+    const dadosIniciais = carregarDadosJson();
+    listaDesejos = dadosIniciais.filmes;
+    perfil = dadosIniciais.perfil;
+    $$(".card-filme, .top-semana-item").forEach(inicializarCard);
+    atualizarBotoesLista();
+    renderMinhaLista();
+    preencherPerfil();
 
-        // Eventos para os botões de navegação dos trilhos
-        if (card.classList.contains("card-filme")) {
-            // Eventos para os botões de navegação dos trilhos
-            const h3 = $("h3", card);
-            if (h3 && !$(".card-meta", h3)) {
-                const span = document.createElement("span");
-                span.className = "card-meta";
-                span.textContent = meta;
-                h3.appendChild(span);
-            }
-        } else if (!$(".top-meta", card)) {
-            // Eventos para os botões de navegação dos trilhos
-            const span = document.createElement("span");
-            span.className = "top-meta";
-            span.textContent = meta;
-            card.appendChild(span);
-        }
-
-        // Eventos para os botões de navegação dos trilhos
-        card.tabIndex = 0;
-        card.setAttribute("role", "button");
-        card.addEventListener("click", () => abrirSidebar(nome));
-        // Eventos para os botões de navegação dos trilhos
-        card.addEventListener("keydown", (e) => {
-            // Eventos para os botões de navegação dos trilhos
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                abrirSidebar(nome);
-            }
+    // Eventos para definir os links de navegacao
+    ui.navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            setView(link.dataset.view || "inicio");
         });
     });
+
+    // Eventos para definir o campo de busca
+    ui.campoBusca?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const termo = ui.inputBusca?.value || "";
+        renderBusca(termo);
+        setView("busca");
+    });
+
+    // Eventos para definir o botao de perfil
+    ui.botaoPerfil?.addEventListener("click", () => {
+        preencherPerfil();
+        setView("perfil");
+    });
+
+    // Eventos para definir o formulario de perfil
+    ui.formPerfil?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        perfil = {
+            nome: ui.formPerfil.nome.value.trim(),
+            email: ui.formPerfil.email.value.trim(),
+            telefone: ui.formPerfil.telefone.value.trim(),
+            plano: ui.formPerfil.plano.value,
+            idioma: ui.formPerfil.idioma.value
+        };
+        salvarDadosJson();
+        if (ui.perfilStatus) ui.perfilStatus.textContent = "Perfil atualizado com sucesso.";
+    });
+
+    // Eventos para definir a view inicial
+    setView("inicio");
 
     // Evento para abrir o modal de detalhes do filme em destaque quando o botão "Mais informações" é clicado
     ui.botaoMaisInfo?.addEventListener("click", () => abrirSidebar("O Sal da Terra"));

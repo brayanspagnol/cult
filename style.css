@@ -27,6 +27,7 @@ body {
     color: var(--text);
 }
 
+/* Estilos dos inputs, botões e selects */
 input,
 button,
 select,
@@ -38,10 +39,14 @@ textarea {
 /* Estilos do header */
 .header {
     width: 100%;
-    min-height: 78px;
+    min-height: 76px;
     padding: 14px 24px;
-    background: linear-gradient(180deg, #000 0%, #070707 100%);
-    border-bottom: 1px solid #1f1f1f;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    background: transparent;
+    border-bottom: none;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -55,18 +60,72 @@ textarea {
     letter-spacing: 1.2px;
     font-size: 1.25rem;
     white-space: nowrap;
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilos do menu de navegacao */
+.header-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+    z-index: 2;
+}
+
+/* Estilos do link do menu de navegacao */
+.header-menu a {
+    text-decoration: none;
+    color: #e5e5e5;
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.9;
+    transition: opacity 0.18s ease, color 0.18s ease;
+}
+
+/* Estilos do link do menu de navegacao ativo */
+.header-menu a[aria-current="page"] {
+    color: #ffffff;
+    opacity: 1;
+}
+
+/* Estilos do link do menu de navegacao ao passar o mouse */
+.header-menu a:hover {
+    color: #ffffff;
+    opacity: 1;
+}
+
+/* Estilos das acoes do header */
+.header-acoes {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilos da sobreposição do header */
+.header::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 120px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
 }
 
 /* Estilos do campo de busca */
 .campo-busca {
-    flex: 1;
-    max-width: 760px;
-    margin: 0 auto;
+    width: min(340px, 48vw);
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--surface);
-    border: 1px solid #2a2a2a;
+    background: rgba(12, 12, 12, 0.76);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 999px;
     padding: 7px 8px 7px 14px;
 }
@@ -85,11 +144,11 @@ textarea {
 .campo-busca button {
     border: none;
     border-radius: 999px;
-    background: linear-gradient(180deg, var(--destaque) 0%, var(--destaque-escuro) 100%);
+    background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
     font-weight: 700;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     padding: 0;
     display: grid;
     place-items: center;
@@ -109,8 +168,8 @@ textarea {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid #383838;
-    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(26, 26, 26, 0.82);
     color: #fff;
     display: grid;
     place-items: center;
@@ -129,7 +188,7 @@ textarea {
 .hero-filme {
     position: relative;
     width: 100%;
-    height: clamp(260px, 42vh, 430px);
+    height: clamp(360px, 66vh, 760px);
     overflow: hidden;
 }
 
@@ -139,7 +198,7 @@ textarea {
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: brightness(0.75);
+    filter: brightness(0.86);
 }
 
 /* Estilos da sobreposição do filme em destaque */
@@ -148,9 +207,33 @@ textarea {
     inset: 0;
     display: flex;
     align-items: flex-end;
-    padding: 0 24px 32px;
+    padding: 120px 24px 44px;
     background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.9) 85%);
+        linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.28) 52%, rgba(0, 0, 0, 0.85) 90%, #000 100%);
+}
+
+/* Estilos da sobreposição do filme em destaque */
+.hero-filme::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 140px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.64) 0%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none;
+}
+
+/* Estilos da sobreposição do filme em destaque */
+.hero-filme::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 180px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+    pointer-events: none;
 }
 
 /* Estilos da informação do filme em destaque */
@@ -217,6 +300,7 @@ textarea {
     align-items: center;
 }
 
+/* Estilos da meta do filme em destaque */
 .hero-meta {
     margin-top: 14px;
     display: flex;
@@ -224,6 +308,7 @@ textarea {
     gap: 10px;
 }
 
+/* Estilos da meta do filme em destaque */
 .hero-ano,
 .hero-categoria {
     font-size: 0.82rem;
@@ -420,6 +505,11 @@ body.sidebar-aberta {
     border: 0;
 }
 
+/* Estilos da seção escondida */
+.escondida {
+    display: none !important;
+}
+
 /* Estilos da seção de conteúdo */
 .conteudo {
     padding: 20px 24px 28px;
@@ -428,16 +518,97 @@ body.sidebar-aberta {
         var(--bg-black);
 }
 
+/* Estilos da seção de filme em destaque escondida */
+.hero-filme.escondida + .conteudo {
+    padding-top: 96px;
+}
+
 /* Estilos da seção de filmes */
 .sessao-filmes {
     margin: 0 auto;
 }
 
+/* Estilos da seção de minha lista */
+.sessao-minha-lista {
+    margin: 0 auto 14px;
+}
+
+/* Estilos da seção de minha lista vazia */
+.minha-lista-vazia {
+    margin: 0 4px 14px;
+    color: #bfbfbf;
+    font-size: 0.92rem;
+}
+
+/* Estilos da busca status */
+.busca-status {
+    margin: 0 4px 12px;
+    color: #d1d1d1;
+    font-size: 0.92rem;
+}
+
+/* Estilos da seção de perfil */
+.sessao-perfil {
+    margin: 0 auto 14px;
+    max-width: 560px;
+}
+
+/* Estilos do formulário de perfil */
+.perfil-form {
+    display: grid;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    background: rgba(18, 18, 18, 0.82);
+}
+
+/* Estilos do label do formulário de perfil */
+.perfil-form label {
+    display: grid;
+    gap: 6px;
+    font-size: 0.86rem;
+    color: #d8d8d8;
+    font-weight: 600;
+}
+
+/* Estilos do input e select do formulário de perfil */
+.perfil-form input,
+.perfil-form select {
+    width: 100%;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    background: #111;
+    color: #f2f2f2;
+    padding: 10px 12px;
+}
+
+/* Estilos do botão de salvar do formulário de perfil */
+.perfil-salvar {
+    margin-top: 4px;
+    border: none;
+    border-radius: 8px;
+    background: var(--destaque);
+    color: #fff;
+    font-weight: 700;
+    padding: 11px 14px;
+    cursor: pointer;
+}
+
+/* Estilos do status do formulário de perfil */
+.perfil-status {
+    margin: 0;
+    min-height: 20px;
+    color: #cab4ff;
+    font-size: 0.86rem;
+}
+
+/* Estilos da seção de genero */
 .sessao-genero {
     margin-bottom: 16px;
 }
 
-/* Estilos do título da seção de filmes */
+/* Estilos do título da seção de topo */
 .sessao-topo h2 {
     margin: 8px 0 16px;
     font-size: 1.35rem;
@@ -445,7 +616,7 @@ body.sidebar-aberta {
     color: #f8f2ff;
 }
 
-/* Estilos da lista de filmes */
+/* Estilos da lista de filmes e minha lista */
 .lista-filmes {
     display: flex;
     gap: 12px;
@@ -455,18 +626,18 @@ body.sidebar-aberta {
     -ms-overflow-style: none;
 }
 
-/* Estilos da barra de rolagem da lista de filmes */
+/* Estilos da barra de rolagem da lista de filmes e minha lista */
 .lista-filmes::-webkit-scrollbar {
     display: none;
 }
 
-/* Estilos da seção de trilhos */
+/* Estilos da seção de trilhos de filmes e minha lista */
 .sessao-trilho,
 .top-trilho {
     position: relative;
 }
 
-/* Estilos do botão de navegação dos trilhos */
+/* Estilos do botão de navegação dos trilhos de filmes e minha lista */
 .trilho-nav {
     position: absolute;
     top: 50%;
@@ -483,22 +654,22 @@ body.sidebar-aberta {
     cursor: pointer;
 }
 
-/* Estilos do botão de navegação dos trilhos para a esquerda */
+/* Estilos do botão de navegação dos trilhos de filmes e minha lista para a esquerda */
 .trilho-nav-prev {
     left: 2px;
 }
 
-/* Estilos do botão de navegação dos trilhos para a direita */
+/* Estilos do botão de navegação dos trilhos de filmes e minha lista para a direita */
 .trilho-nav-next {
     right: 2px;
 }
 
-/* Estilos do botão de navegação dos trilhos ao passar o mouse */
+/* Estilos do botão de navegação dos trilhos de filmes e minha lista ao passar o mouse */
 .trilho-nav:hover {
     background: rgba(18, 18, 18, 0.95);
 }
 
-/* Estilos da seção de filmes */
+/* Estilos da carta de filme */
 .card-filme {
     flex: 0 0 180px;
     margin: 0;
@@ -508,9 +679,10 @@ body.sidebar-aberta {
     overflow: hidden;
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     cursor: pointer;
+    position: relative;
 }
 
-/* Estilos da imagem da carta de filme */
+/* Estilos da imagem do filme na carta de filme */
 .card-filme img {
     width: 100%;
     aspect-ratio: 2 / 3;
@@ -519,7 +691,7 @@ body.sidebar-aberta {
     background: #0c0c0c;
 }
 
-/* Estilos do título da carta de filme */
+/* Estilos do título do filme na carta de filme */
 .card-filme h3 {
     margin: 0;
     padding: 10px 10px 12px;
@@ -529,15 +701,94 @@ body.sidebar-aberta {
     color: #f1eaff;
 }
 
-.card-meta {
-    display: block;
-    margin-top: 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #bdbdbd;
+/* Estilos da sobreposição de informações da carta de filme */
+.card-hover-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.92) 56%, rgba(0, 0, 0, 0.98) 100%);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
 }
 
-/* Estilos do footer */
+/* Estilos da sobreposição de informações da carta de filme ao passar o mouse */
+.card-filme:hover .card-hover-info,
+.card-filme:focus-within .card-hover-info,
+.top-semana-item:hover .card-hover-info,
+.top-semana-item:focus-within .card-hover-info {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Estilos da meta do filme na carta de filme */
+.card-hover-meta {
+    margin: 0 0 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #e6e6e6;
+}
+
+/* Estilos das acoes da carta de filme */
+.card-hover-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+/* Estilos do botão de acao da carta de filme */
+.card-acao {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 6px 8px;
+    transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+/* Estilos do icone da acao da carta de filme */
+.card-acao-icone {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    flex: 0 0 34px;
+}
+
+/* Estilos do icone da acao da carta de filme */
+.card-acao-icone svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+/* Estilos do icone da acao da carta de filme */
+.card-acao-lista svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* Estilos do botão de acao da carta de filme ao passar o mouse */
+.card-acao:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Estilos do botão de acao da carta de filme ativo */
+.card-acao-lista.ativo {
+    background: rgba(139, 44, 255, 0.72);
+    border-color: rgba(174, 110, 255, 0.95);
+}
+
+/* Estilos do rodape */
 .footer {
     border-top: 1px solid #252525;
     background: #090909;
@@ -550,13 +801,13 @@ body.sidebar-aberta {
     flex-wrap: wrap;
 }
 
-/* Estilos do texto do footer */
+/* Estilos do texto do rodape */
 .footer p {
     margin: 0;
     font-size: 0.9rem;
 }
 
-/* Estilos do menu do footer */
+/* Estilos do menu do rodape */
 .footer nav {
     display: flex;
     gap: 14px;
@@ -585,6 +836,7 @@ body.sidebar-aberta {
     -ms-overflow-style: none;
 }
 
+/* Estilos da barra de rolagem da lista de top filmes mais assistidos da semana */
 .top-semana-lista::-webkit-scrollbar {
     display: none;
 }
@@ -599,6 +851,11 @@ body.sidebar-aberta {
     background: #111111;
     transition: transform 0.2s ease, border-color 0.2s ease;
     cursor: pointer;
+}
+
+/* Estilos da sobreposição de informações da carta de top filme mais assistido da semana */
+.top-semana-item .card-hover-info {
+    padding: 10px 8px 8px 48px;
 }
 
 /* Estilos da meta da carta de top filme mais assistido da semana */
@@ -647,4 +904,60 @@ body.sidebar-aberta {
     display: grid;
     place-items: center;
     z-index: 2;
+}
+
+/* Estilos da media query para telas menores que 980px */
+@media (max-width: 980px) {
+    .header {
+        gap: 12px;
+    }
+
+    .header-menu {
+        position: static;
+        transform: none;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .header-menu a {
+        font-size: 0.86rem;
+    }
+
+    .campo-busca {
+        width: min(260px, 46vw);
+    }
+}
+
+/* Estilos da media query para telas menores que 760px */
+@media (max-width: 760px) {
+    .header {
+        padding: 12px 14px;
+        flex-wrap: wrap;
+    }
+
+    .header-menu {
+        order: 3;
+        position: static;
+        transform: none;
+        width: 100%;
+        padding-bottom: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .header-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .header-acoes {
+        margin-left: 0;
+    }
+
+    .campo-busca {
+        width: min(220px, 58vw);
+    }
+
+    .hero-overlay {
+        padding-top: 146px;
+    }
 }

@@ -11,25 +11,36 @@
         <a href="#" class="logo" aria-label="Logo">
             CULT
         </a>
-
-        <form class="campo-busca" role="search" aria-label="Busca">
-            <label for="busca" class="sr-only">Buscar</label>
-            <input id="busca" type="search" placeholder="Titulos, pessoas e generos" />
-            <button type="submit" aria-label="Buscar">
+        <!-- classe header, para o menu de navegacao -->
+        <nav class="header-menu" aria-label="Navegacao principal">
+            <a href="#" class="nav-link" data-view="inicio" aria-current="page">Inicio</a>
+            <a href="#" class="nav-link" data-view="series">Series</a>
+            <a href="#" class="nav-link" data-view="filmes">Filmes</a>
+            <a href="#" class="nav-link" data-view="documentarios">Documentarios</a>
+            <a href="#" class="nav-link" data-view="minha-lista">Minha Lista</a>
+        </nav>
+        <!-- classe header-acoes, para o campo de busca e o botao de usuario -->
+        <div class="header-acoes">
+            <form class="campo-busca" role="search" aria-label="Busca">
+                <label for="busca" class="sr-only">Buscar</label>
+                <input id="busca" type="search" placeholder="Titulos, pessoas e generos" />
+                <button type="submit" aria-label="Buscar">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 4a6 6 0 1 0 3.86 10.59l4.28 4.28a1 1 0 0 0 1.41-1.41l-4.28-4.28A6 6 0 0 0 10 4Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"></path>
+                    </svg>
+                    <span class="sr-only">Buscar</span>
+                </button>
+            </form>
+            <!-- classe usuario, para o botao de usuario -->
+            <button class="usuario" type="button" aria-label="Perfil do usuario">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M10 4a6 6 0 1 0 3.86 10.59l4.28 4.28a1 1 0 0 0 1.41-1.41l-4.28-4.28A6 6 0 0 0 10 4Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"></path>
+                    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"></path>
                 </svg>
-                <span class="sr-only">Buscar</span>
             </button>
-        </form>
-
-        <button class="usuario" type="button" aria-label="Perfil do usuario">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"></path>
-            </svg>
-        </button>
+        </div>
     </header>
 
+    <!-- classe hero-filme, para o filme em destaque -->
     <section class="hero-filme" aria-label="Filme de destaque">
         <img src="images/capa_principal.jpg" alt="Cena do filme em destaque" loading="eager">
         <div class="hero-overlay">
@@ -68,7 +79,9 @@
         </div>
     </section>
 
+    <!-- classe conteudo, para o conteudo principal -->
     <main class="conteudo">
+        <!-- classe sessao-top-semana, para o top filmes mais assistidos da semana -->
         <section class="sessao-top-semana" aria-label="Top filmes mais assistidos da semana">
             <div class="sessao-topo">
                 <h2>Top filmes mais assistidos da semana</h2>
@@ -121,8 +134,69 @@
             </div>
         </section>
 
+        <!-- classe sessao-minha-lista, para a minha lista de desejos -->
+        <section class="sessao-minha-lista escondida" aria-label="Minha lista de desejos">
+            <div class="sessao-topo">
+                <h2>Minha Lista</h2>
+            </div>
+            <p class="minha-lista-vazia">Sua lista de desejos esta vazia. Salve filmes para ver depois.</p>
+            <div class="sessao-trilho">
+                <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                <div class="lista-filmes minha-lista-lista" role="list"></div>
+                <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
+            </div>
+        </section>
+
+        <!-- classe sessao-busca, para os resultados da busca -->
+        <section class="sessao-busca escondida" aria-label="Resultados da busca">
+            <div class="sessao-topo">
+                <h2>Resultados da busca</h2>
+            </div>
+            <p class="busca-status"></p>
+            <div class="sessao-trilho">
+                <button class="trilho-nav trilho-nav-prev" type="button" aria-label="Rolar para a esquerda">&lt;</button>
+                <div class="lista-filmes busca-lista" role="list"></div>
+                <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
+            </div>
+        </section>
+
+        <!-- classe sessao-perfil, para o perfil do usuario -->
+        <section class="sessao-perfil escondida" aria-label="Perfil do usuario">
+            <div class="sessao-topo">
+                <h2>Meu Perfil</h2>
+            </div>
+            <form class="perfil-form" autocomplete="on">
+                <label>Nome
+                    <input name="nome" type="text" required>
+                </label>
+                <label>E-mail
+                    <input name="email" type="email" required>
+                </label>
+                <label>Telefone
+                    <input name="telefone" type="tel" required>
+                </label>
+                <label>Plano
+                    <select name="plano">
+                        <option value="Padrao">Padrao</option>
+                        <option value="Premium">Premium</option>
+                        <option value="Familia">Familia</option>
+                    </select>
+                </label>
+                <label>Idioma
+                    <select name="idioma">
+                        <option value="Portugues">Portugues</option>
+                        <option value="English">English</option>
+                        <option value="Espanol">Espanol</option>
+                    </select>
+                </label>
+                <button type="submit" class="perfil-salvar">Salvar perfil</button>
+                <p class="perfil-status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <!-- classe sessao-filmes, para o catalogo de filmes por genero -->
         <section class="sessao-filmes" aria-label="Catalogo de filmes por genero">
-            <section class="sessao-genero" aria-label="Drama e documentarios">
+            <section class="sessao-genero" data-genero="documentarios" aria-label="Drama e documentarios">
                 <div class="sessao-topo">
                     <h2>Drama e documentarios</h2>
                 </div>
@@ -143,8 +217,8 @@
                     <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
                 </div>
             </section>
-
-            <section class="sessao-genero" aria-label="Acao e crime">
+            <!-- classe sessao-genero, para o catalogo de filmes por genero -->
+            <section class="sessao-genero" data-genero="filmes" aria-label="Acao e crime">
                 <div class="sessao-topo">
                     <h2>Acao e crime</h2>
                 </div>
@@ -165,8 +239,8 @@
                     <button class="trilho-nav trilho-nav-next" type="button" aria-label="Rolar para a direita">&gt;</button>
                 </div>
             </section>
-
-            <section class="sessao-genero" aria-label="Series e minisséries">
+            <!-- classe sessao-genero, para o catalogo de series por genero -->
+            <section class="sessao-genero" data-genero="series" aria-label="Series e minisséries">
                 <div class="sessao-topo">
                     <h2>Series e minisséries</h2>
                 </div>
@@ -189,6 +263,7 @@
         </section>
     </main>
 
+    <!-- classe footer, para o rodape -->
     <footer class="footer">
         <p>&copy; 2026 CULT. Todos os direitos reservados.</p>
         <nav aria-label="Links do rodape">
